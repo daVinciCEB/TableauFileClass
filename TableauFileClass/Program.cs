@@ -6,7 +6,9 @@ namespace TableauFileClass
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			TableauWorkbook workbook = new TableauWorkbook();
+			workbook.WorkbookName = "Base Workbook";
+			workbook.SaveWorkbook();
 		}
 	}
 }
