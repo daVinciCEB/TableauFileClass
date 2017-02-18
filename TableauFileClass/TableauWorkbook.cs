@@ -6,10 +6,14 @@ namespace TableauFileClass
 {
 	public class TableauWorkbook
 	{
-		#region Class Properties
+		#region Basic Tableau Workbook Class Properties
 		public string WorkbookName { get; set; }
 		public string WorkbookPath { get; set; }
 		public TableauVersion WorkbookVersion { get; set; }
+		#endregion
+
+		#region Advanced Tableau Workbook Class Properties
+
 		#endregion
 
 		#region Class Construstors

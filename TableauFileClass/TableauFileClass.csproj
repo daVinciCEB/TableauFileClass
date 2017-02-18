@@ -42,5 +42,12 @@
     <Compile Include="TableauVersion.cs" />
     <Compile Include="WorkbookNameNotDefinedException.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tableau Workbook Examples\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Tableau Workbook Examples\BaseWorkbook.xml" />
+    <None Include="Tableau Workbook Examples\TableauExample.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
