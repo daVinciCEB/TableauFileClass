@@ -12,6 +12,25 @@ namespace TableauFileClass
 
 		#region Tableau Datasource Functions
 		/// <summary>
+		/// Gets the Tableau Version of the datasource.
+		/// </summary>
+		/// <returns>The Tableau Version of the data source</returns>
+		public string GetTableauVersion()
+		{
+			switch (DataSourceVersion)
+			{
+				case TableauVersion.Tableau8:
+					return "8.0";
+				case TableauVersion.Tableau9:
+					return "9.0";
+				case TableauVersion.Tableau10:
+					return "10.0";
+				default:
+					return "8.0";
+			}
+		}
+
+		/// <summary>
 		/// Add an attribute to the datasource.
 		/// </summary>
 		/// <param name="attrName">The specified name for the new datasource attribute</param>

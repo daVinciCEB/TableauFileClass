@@ -45,6 +45,10 @@
     <Compile Include="TableauPlatform.cs" />
     <Compile Include="TableauDataSource.cs" />
     <Compile Include="TableauWorksheet.cs" />
+    <Compile Include="TableauParameter.cs" />
+    <Compile Include="TableauColumnDataType.cs" />
+    <Compile Include="TableauParameterDomainType.cs" />
+    <Compile Include="TableauCalculation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tableau Workbook Examples\" />

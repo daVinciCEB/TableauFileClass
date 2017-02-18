@@ -22,7 +22,28 @@ namespace TableauFileClass
 		#endregion
 
 		#region Tableau Workbook Functions
+		/// <summary>
+		/// Adds a parameters section to the Tableau Workbook.
+		/// </summary>
+		private void AddParametersSection()
+		{
+			TableauDataSource parameters = new TableauDataSource("Parameters", WorkbookVersion);
+			parameters.AddAttribute("hasconnection", "false");
+			parameters.AddAttribute("inline", "true");
+			datasources.Add(parameters);
+		}
 
+		/// <summary>
+		/// Adds a specified parameter to the parameters data source.
+		/// </summary>
+		/// <param name="parametername">The name of the parameter that is being added</param>
+		public void AddParameter(string parametername)
+		{
+			if (datasources.Find(ds => ds.Name == "Parameters") == null)
+			{
+				AddParametersSection();
+			}
+		}
 		#endregion
 
 		#region Tableau Workbook Constructors
@@ -165,6 +186,8 @@ namespace TableauFileClass
 				foreach (TableauDataSource datasource in datasources)
 				{
 					writer.WriteStartElement("datasource");
+					writer.WriteAttributeString("name", datasource.Name);
+					writer.WriteAttributeString("version", datasource.GetTableauVersion());
 					foreach (string attr in datasource.GetAttributeNames())
 					{
 						writer.WriteAttributeString(attr, datasource.GetAttributeValue(attr));

@@ -8,6 +8,7 @@ namespace TableauFileClass
 		{
 			TableauWorkbook workbook = new TableauWorkbook();
 			workbook.WorkbookName = "Base Workbook";
+			workbook.AddParameter("Test");
 			workbook.SaveWorkbook();
 		}
 	}
