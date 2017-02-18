@@ -15,11 +15,13 @@ namespace TableauFileClass
 		#endregion
 
 		#region Advanced Tableau Workbook Class Properties
-		//Preferences Node in Tableau Workbook
+		//Preferences section in Tableau Workbook
 		private List<TableauWorkbookPreference> preferences = new List<TableauWorkbookPreference>() { new TableauWorkbookPreference("ui.encoding.shelf.height", "250"), new TableauWorkbookPreference("ui.shelf.height", "250") };
+		public List<TableauDataSource> datasources = new List<TableauDataSource>();
+		public List<TableauWorksheet> worksheets = new List<TableauWorksheet>();
 		#endregion
 
-		#region Class Construstors
+		#region Tableau Workbook Constructors
 		/// <summary>
 		/// Create a default Tableau workbook with no name or file path, a default version of 8, and a default platform of Windows.
 		/// </summary>
@@ -72,6 +74,7 @@ namespace TableauFileClass
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>
 		/// <param name="version">The specified Tableau version for your Tableau workbook</param>
+		/// <param name="platform">The specified platform for your Tableau workbook</param>
 		public TableauWorkbook(string workbookName, string workbookPath, TableauVersion version, TableauPlatform platform)
 		{
 			WorkbookName = workbookName;
@@ -150,6 +153,29 @@ namespace TableauFileClass
 					writer.WriteEndElement();
 				}
 				//Close the preferences node
+				writer.WriteEndElement();
+
+				//Write the datasources node to the workbook
+				writer.WriteStartElement("datasources");
+				//Write each datasource in our list here
+				foreach (TableauDataSource datasource in datasources)
+				{
+					writer.WriteStartElement("datasource");
+					writer.WriteEndElement();
+				}
+				//Close the datasources node
+				writer.WriteEndElement();
+
+				//Write the worksheets node to the workbook
+				writer.WriteStartElement("worksheets");
+				//Write each worksheet in our list here
+				foreach (TableauWorksheet worksheet in worksheets)
+				{
+					writer.WriteStartElement("worksheet");
+					writer.WriteAttributeString("name", worksheet.WorksheetName);
+					writer.WriteEndElement();
+				}
+				//Close the datasources node
 				writer.WriteEndElement();
 
 				//Close the workbook node

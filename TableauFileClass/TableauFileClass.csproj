@@ -43,6 +43,8 @@
     <Compile Include="WorkbookNameNotDefinedException.cs" />
     <Compile Include="TableauWorkbookPreference.cs" />
     <Compile Include="TableauPlatform.cs" />
+    <Compile Include="TableauDataSource.cs" />
+    <Compile Include="TableauWorksheet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tableau Workbook Examples\" />
