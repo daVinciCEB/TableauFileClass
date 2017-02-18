@@ -41,6 +41,8 @@
     <Compile Include="TableauWorkbook.cs" />
     <Compile Include="TableauVersion.cs" />
     <Compile Include="WorkbookNameNotDefinedException.cs" />
+    <Compile Include="TableauWorkbookPreference.cs" />
+    <Compile Include="TableauPlatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tableau Workbook Examples\" />

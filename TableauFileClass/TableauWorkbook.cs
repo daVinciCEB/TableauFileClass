@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace TableauFileClass
 {
@@ -10,33 +11,37 @@ namespace TableauFileClass
 		public string WorkbookName { get; set; }
 		public string WorkbookPath { get; set; }
 		public TableauVersion WorkbookVersion { get; set; }
+		public TableauPlatform WorkbookPlatform { get; set; }
 		#endregion
 
 		#region Advanced Tableau Workbook Class Properties
-
+		//Preferences Node in Tableau Workbook
+		private List<TableauWorkbookPreference> preferences = new List<TableauWorkbookPreference>() { new TableauWorkbookPreference("ui.encoding.shelf.height", "250"), new TableauWorkbookPreference("ui.shelf.height", "250") };
 		#endregion
 
 		#region Class Construstors
 		/// <summary>
-		/// Create a default Tableau workbook with no name or file path, and a default version of 8.
+		/// Create a default Tableau workbook with no name or file path, a default version of 8, and a default platform of Windows.
 		/// </summary>
 		public TableauWorkbook()
 		{
 			WorkbookVersion = TableauVersion.Tableau8;
+			WorkbookPlatform = TableauPlatform.Windows;
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name, and a default version of 8.
+		/// Create a default Tableau workbook with a specified name, a default version of 8, and a default platform of Windows.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		public TableauWorkbook(string workbookName)
 		{
 			WorkbookName = workbookName;
 			WorkbookVersion = TableauVersion.Tableau8;
+			WorkbookPlatform = TableauPlatform.Windows;
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name and file path, and a default version of 8.
+		/// Create a default Tableau workbook with a specified name and file path, a default version of 8, and a default platform of Windows.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>
@@ -45,10 +50,11 @@ namespace TableauFileClass
 			WorkbookName = workbookName;
 			WorkbookPath = workbookPath;
 			WorkbookVersion = TableauVersion.Tableau8;
+			WorkbookPlatform = TableauPlatform.Windows;
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name, file path, and version.
+		/// Create a default Tableau workbook with a specified name, file path, version, and a default platform of Windows.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>
@@ -58,6 +64,20 @@ namespace TableauFileClass
 			WorkbookName = workbookName;
 			WorkbookPath = workbookPath;
 			WorkbookVersion = version;
+		}
+
+		/// <summary>
+		/// Create a default Tableau workbook with a specified name, file path, version, and platform.
+		/// </summary>
+		/// <param name="workbookName">The specified name for your Tableau workbook</param>
+		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>
+		/// <param name="version">The specified Tableau version for your Tableau workbook</param>
+		public TableauWorkbook(string workbookName, string workbookPath, TableauVersion version, TableauPlatform platform)
+		{
+			WorkbookName = workbookName;
+			WorkbookPath = workbookPath;
+			WorkbookVersion = version;
+			WorkbookPlatform = platform;
 		}
 		#endregion
 
@@ -98,6 +118,46 @@ namespace TableauFileClass
 
 		private void SaveWorkbookTableau8()
 		{
+			using (XmlWriter writer = XmlWriter.Create(WorkbookName + ".twb"))
+			{
+				//Start writing XML Document
+				writer.WriteStartDocument();
+				//Create the base node, which is our workbook node
+				writer.WriteStartElement("workbook");
+				//Define the Platform in our workbook node
+				switch (WorkbookPlatform)
+				{
+					case TableauPlatform.Windows:
+						writer.WriteAttributeString("source-platform", "win");
+						break;
+					case TableauPlatform.MacOS:
+						writer.WriteAttributeString("source-platform", "mac");
+						break;
+				}
+				//Define the Tableau version for our workbook
+				writer.WriteAttributeString("version", "8.0");
+				//Set up the user value under the xmlns namespace
+				writer.WriteAttributeString("xmlns", "user", null, "http://www.tableausoftware.com/xml/user");
+
+				//Write the preferences node to the workbook
+				writer.WriteStartElement("preferences");
+				//Write each preference in our list here
+				foreach (TableauWorkbookPreference preference in preferences)
+				{
+					writer.WriteStartElement("preference");
+					writer.WriteAttributeString("name", preference.preferenceName);
+					writer.WriteAttributeString("value", preference.preferenceValue);
+					writer.WriteEndElement();
+				}
+				//Close the preferences node
+				writer.WriteEndElement();
+
+				//Close the workbook node
+				writer.WriteEndElement();
+
+				//End writing XML Document
+				writer.WriteEndDocument();
+			}
 		}
 
 		private void SaveWorkbookTableau9()
