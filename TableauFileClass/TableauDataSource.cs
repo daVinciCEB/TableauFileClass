@@ -7,7 +7,41 @@ namespace TableauFileClass
 		#region Tableau Datasource Properties
 		public string Name { get; set; }
 		public TableauVersion DataSourceVersion { get; set; }
-		public List<KeyValuePair<string, string>> DataSourceAttributes { get; set; }
+		private Dictionary<string, string> DataSourceAttributes = new Dictionary<string, string>();
+		#endregion
+
+		#region Tableau Datasource Functions
+		/// <summary>
+		/// Add an attribute to the datasource.
+		/// </summary>
+		/// <param name="attrName">The specified name for the new datasource attribute</param>
+		/// <param name="attrValue">The specified value for the new datasource attribute</param>
+		public void AddAttribute(string attrName, string attrValue)
+		{
+			DataSourceAttributes.Add(attrName, attrValue);
+		}
+
+		/// <summary>
+		/// Get the names of all the attributes of this datasource.
+		/// </summary>
+		public List<string> GetAttributeNames()
+		{
+			List<string> attributeNames = new List<string>();
+			foreach (string attr in DataSourceAttributes.Keys)
+			{
+				attributeNames.Add(attr);
+			}
+			return attributeNames;
+		}
+
+		/// <summary>
+		/// Get the value of a specified attribute.
+		/// </summary>
+		/// <param name="attrName">The specified name for the attribute whose value is being retrieved</param>
+		public string GetAttributeValue(string attrName)
+		{
+			return DataSourceAttributes[attrName];
+		}
 		#endregion
 
 		#region Tableau Datasource Constructors

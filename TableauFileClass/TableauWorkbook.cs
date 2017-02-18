@@ -21,6 +21,10 @@ namespace TableauFileClass
 		public List<TableauWorksheet> worksheets = new List<TableauWorksheet>();
 		#endregion
 
+		#region Tableau Workbook Functions
+
+		#endregion
+
 		#region Tableau Workbook Constructors
 		/// <summary>
 		/// Create a default Tableau workbook with no name or file path, a default version of 8, and a default platform of Windows.
@@ -161,6 +165,10 @@ namespace TableauFileClass
 				foreach (TableauDataSource datasource in datasources)
 				{
 					writer.WriteStartElement("datasource");
+					foreach (string attr in datasource.GetAttributeNames())
+					{
+						writer.WriteAttributeString(attr, datasource.GetAttributeValue(attr));
+					}
 					writer.WriteEndElement();
 				}
 				//Close the datasources node
