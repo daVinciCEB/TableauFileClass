@@ -23,6 +23,24 @@ namespace TableauFileClass
 
 		#region Tableau Workbook Functions
 		/// <summary>
+		/// Adds an Excel datasource to your Tableau file.
+		/// </summary>
+		/// <param name="filePath">File path to your Excel file.</param>
+		/// <param name="dataSourceName">Data source name.</param>
+		public void AddExcelDataSource(string filePath, string dataSourceName)
+		{
+			FileInfo excelFile = new FileInfo(filePath);
+			if (excelFile.Extension == ".xlsx")
+			{
+				TableauDataSource excelDataSource = new TableauDataSource(dataSourceName, WorkbookVersion);
+				excelDataSource.AddAttribute("inline", "true");
+			}
+			else
+			{
+				throw new DataSourceNotCorrectTypeException(filePath, String.Format("{0} is not an Excel file.", filePath));
+			}
+		}
+		/// <summary>
 		/// Adds a parameters section to the Tableau Workbook.
 		/// </summary>
 		private void AddParametersSection()
@@ -36,8 +54,8 @@ namespace TableauFileClass
 		/// <summary>
 		/// Adds a specified parameter to the parameters data source.
 		/// </summary>
-		/// <param name="parametername">The name of the parameter that is being added</param>
-		public void AddParameter(string parametername)
+		/// <param name="parameterName">The name of the parameter that is being added</param>
+		public void AddParameter(string parameterName)
 		{
 			if (datasources.Find(ds => ds.Name == "Parameters") == null)
 			{
@@ -57,7 +75,7 @@ namespace TableauFileClass
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name, a default version of 8, and a default platform of Windows.
+		/// Create a default <see cref="T:TableauFileClass.TableauWorkbook"/> with a specified name, a default version of 8, and a default platform of Windows.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		public TableauWorkbook(string workbookName)
@@ -68,7 +86,7 @@ namespace TableauFileClass
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name and file path, a default version of 8, and a default platform of Windows.
+		/// Create a default <see cref="T:TableauFileClass.TableauWorkbook"/> with a specified name and file path, a default version of 8, and a default platform of Windows.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>
@@ -81,7 +99,7 @@ namespace TableauFileClass
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name, file path, version, and a default platform of Windows.
+		/// Create a default <see cref="T:TableauFileClass.TableauWorkbook"/> with a specified name, file path, version, and a default platform of Windows.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>
@@ -94,7 +112,7 @@ namespace TableauFileClass
 		}
 
 		/// <summary>
-		/// Create a default Tableau workbook with a specified name, file path, version, and platform.
+		/// Create a default <see cref="T:TableauFileClass.TableauWorkbook"/> with a specified name, file path, version, and platform.
 		/// </summary>
 		/// <param name="workbookName">The specified name for your Tableau workbook</param>
 		/// <param name="workbookPath">The specified file path for your Tableau workbook</param>

@@ -65,7 +65,7 @@ namespace TableauFileClass
 
 		#region Tableau Datasource Constructors
 		/// <summary>
-		/// Create a Tableau Datasource with a specified datasource name and a default version of 8.
+		/// Create a <see cref="T:TableauFileClass.TableauDataSource"/> with a specified datasource name and a default version of 8.
 		/// </summary>
 		/// <param name="datasourcename">The specified name for your Tableau Datasource</param>
 		public TableauDataSource(string datasourcename)
@@ -75,7 +75,7 @@ namespace TableauFileClass
 		}
 
 		/// <summary>
-		/// Create a Tableau Datasource with a specified datasource name and version.
+		/// Create a <see cref="T:TableauFileClass.TableauDataSource"/> with a specified datasource name and version.
 		/// </summary>
 		/// <param name="datasourcename">The specified name for your Tableau Datasource</param>
 		/// <param name="version">The specified Tableau version for your Tableau Datasource</param>

@@ -49,6 +49,8 @@
     <Compile Include="TableauColumnDataType.cs" />
     <Compile Include="TableauParameterDomainType.cs" />
     <Compile Include="TableauCalculation.cs" />
+    <Compile Include="DataSourceNotCorrectTypeException.cs" />
+    <Compile Include="TableauDataConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tableau Workbook Examples\" />

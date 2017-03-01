@@ -16,7 +16,7 @@ namespace TableauFileClass
 
 		#region Tableau Parameter Class Constructors
 		/// <summary>
-		/// Creates a new Tableau Parameter with the specified details.
+		/// Creates a new <see cref="T:TableauFileClass.TableauParameter"/> with the specified details.
 		/// </summary>
 		/// <param name="paramName">Parameter Name</param>
 		/// <param name="paramRole">Parameter Role</param>
@@ -36,7 +36,7 @@ namespace TableauFileClass
 		}
 
 		/// <summary>
-		/// Creates a new Tableau Parameter with the specified details.
+		/// Creates a new <see cref="T:TableauFileClass.TableauParameter"/> with the specified details.
 		/// </summary>
 		/// <param name="paramCaption">Parameter Caption</param>
 		/// <param name="paramName">Parameter Name</param>
