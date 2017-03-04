@@ -7,6 +7,7 @@ namespace TableauFileClass
 		#region Tableau Datasource Properties
 		public string Name { get; set; }
 		public TableauVersion DataSourceVersion { get; set; }
+		public TableauDataConnection DataConnection { get; set; }
 		private Dictionary<string, string> DataSourceAttributes = new Dictionary<string, string>();
 		#endregion
 

@@ -6,10 +6,10 @@ namespace TableauFileClass
 	public class TableauDataConnection
 	{
 		#region Tableau Data Connection Class Properties
-		public string ConnectionClass;
-		public string ConnectionFileName;
+		public string ConnectionClass { get; set; }
+		public string ConnectionFileName { get; set; }
+		public TableauDataRelation Relation { get; set; }
 		private Dictionary<string, string> DataConnectionAttributes = new Dictionary<string, string>();
-
 		#endregion
 
 		#region Tableau Data Connection Class Functions

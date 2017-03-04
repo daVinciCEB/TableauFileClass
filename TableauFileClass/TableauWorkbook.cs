@@ -12,6 +12,7 @@ namespace TableauFileClass
 		public string WorkbookPath { get; set; }
 		public TableauVersion WorkbookVersion { get; set; }
 		public TableauPlatform WorkbookPlatform { get; set; }
+		private XmlWriter TableauFileWriter;
 		#endregion
 
 		#region Advanced Tableau Workbook Class Properties
@@ -27,13 +28,19 @@ namespace TableauFileClass
 		/// </summary>
 		/// <param name="filePath">File path to your Excel file.</param>
 		/// <param name="dataSourceName">Data source name.</param>
-		public void AddExcelDataSource(string filePath, string dataSourceName)
+		public void AddExcelDataSource(string filePath, string tableName, string dataSourceName)
 		{
 			FileInfo excelFile = new FileInfo(filePath);
 			if (excelFile.Extension == ".xlsx")
 			{
 				TableauDataSource excelDataSource = new TableauDataSource(dataSourceName, WorkbookVersion);
 				excelDataSource.AddAttribute("inline", "true");
+				excelDataSource.DataConnection = new TableauDataConnection("excel-direct", excelFile.FullName);
+				excelDataSource.DataConnection.AddAttribute("cleaning", "no");
+				excelDataSource.DataConnection.AddAttribute("compat", "no");
+				excelDataSource.DataConnection.AddAttribute("dataRefreshTime", "");
+				excelDataSource.DataConnection.AddAttribute("validate", "no");
+				excelDataSource.DataConnection.Relation = new TableauDataRelation(dataSourceName, "[" + tableName + "$]", "table");
 			}
 			else
 			{
@@ -164,74 +171,74 @@ namespace TableauFileClass
 
 		private void SaveWorkbookTableau8()
 		{
-			using (XmlWriter writer = XmlWriter.Create(WorkbookName + ".twb"))
+			using (XmlWriter TableauFileWriter = XmlWriter.Create(WorkbookName + ".twb"))
 			{
 				//Start writing XML Document
-				writer.WriteStartDocument();
+				TableauFileWriter.WriteStartDocument();
 				//Create the base node, which is our workbook node
-				writer.WriteStartElement("workbook");
+				TableauFileWriter.WriteStartElement("workbook");
 				//Define the Platform in our workbook node
 				switch (WorkbookPlatform)
 				{
 					case TableauPlatform.Windows:
-						writer.WriteAttributeString("source-platform", "win");
+						TableauFileWriter.WriteAttributeString("source-platform", "win");
 						break;
 					case TableauPlatform.MacOS:
-						writer.WriteAttributeString("source-platform", "mac");
+						TableauFileWriter.WriteAttributeString("source-platform", "mac");
 						break;
 				}
 				//Define the Tableau version for our workbook
-				writer.WriteAttributeString("version", "8.0");
+				TableauFileWriter.WriteAttributeString("version", "8.0");
 				//Set up the user value under the xmlns namespace
-				writer.WriteAttributeString("xmlns", "user", null, "http://www.tableausoftware.com/xml/user");
+				TableauFileWriter.WriteAttributeString("xmlns", "user", null, "http://www.tableausoftware.com/xml/user");
 
 				//Write the preferences node to the workbook
-				writer.WriteStartElement("preferences");
+				TableauFileWriter.WriteStartElement("preferences");
 				//Write each preference in our list here
 				foreach (TableauWorkbookPreference preference in preferences)
 				{
-					writer.WriteStartElement("preference");
-					writer.WriteAttributeString("name", preference.preferenceName);
-					writer.WriteAttributeString("value", preference.preferenceValue);
-					writer.WriteEndElement();
+					TableauFileWriter.WriteStartElement("preference");
+					TableauFileWriter.WriteAttributeString("name", preference.preferenceName);
+					TableauFileWriter.WriteAttributeString("value", preference.preferenceValue);
+					TableauFileWriter.WriteEndElement();
 				}
 				//Close the preferences node
-				writer.WriteEndElement();
+				TableauFileWriter.WriteEndElement();
 
 				//Write the datasources node to the workbook
-				writer.WriteStartElement("datasources");
+				TableauFileWriter.WriteStartElement("datasources");
 				//Write each datasource in our list here
 				foreach (TableauDataSource datasource in datasources)
 				{
-					writer.WriteStartElement("datasource");
-					writer.WriteAttributeString("name", datasource.Name);
-					writer.WriteAttributeString("version", datasource.GetTableauVersion());
+					TableauFileWriter.WriteStartElement("datasource");
+					TableauFileWriter.WriteAttributeString("name", datasource.Name);
+					TableauFileWriter.WriteAttributeString("version", datasource.GetTableauVersion());
 					foreach (string attr in datasource.GetAttributeNames())
 					{
-						writer.WriteAttributeString(attr, datasource.GetAttributeValue(attr));
+						TableauFileWriter.WriteAttributeString(attr, datasource.GetAttributeValue(attr));
 					}
-					writer.WriteEndElement();
+					TableauFileWriter.WriteEndElement();
 				}
 				//Close the datasources node
-				writer.WriteEndElement();
+				TableauFileWriter.WriteEndElement();
 
 				//Write the worksheets node to the workbook
-				writer.WriteStartElement("worksheets");
+				TableauFileWriter.WriteStartElement("worksheets");
 				//Write each worksheet in our list here
 				foreach (TableauWorksheet worksheet in worksheets)
 				{
-					writer.WriteStartElement("worksheet");
-					writer.WriteAttributeString("name", worksheet.WorksheetName);
-					writer.WriteEndElement();
+					TableauFileWriter.WriteStartElement("worksheet");
+					TableauFileWriter.WriteAttributeString("name", worksheet.WorksheetName);
+					TableauFileWriter.WriteEndElement();
 				}
 				//Close the datasources node
-				writer.WriteEndElement();
+				TableauFileWriter.WriteEndElement();
 
 				//Close the workbook node
-				writer.WriteEndElement();
+				TableauFileWriter.WriteEndElement();
 
 				//End writing XML Document
-				writer.WriteEndDocument();
+				TableauFileWriter.WriteEndDocument();
 			}
 		}
 
