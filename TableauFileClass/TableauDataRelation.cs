@@ -7,6 +7,7 @@ namespace TableauFileClass
 		public string Name { get; set; }
 		public string Table { get; set; }
 		public string Type { get; set; }
+
 		#endregion
 
 		#region Tableau Data Relation Constructors

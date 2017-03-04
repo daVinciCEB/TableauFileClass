@@ -12,7 +12,7 @@ namespace TableauFileClass
 		}
 
 		protected DataSourceNotCorrectTypeException(TableauDataSource dataSource) :
-		base(String.Format("{0} is not the type of datasource specified.", dataSource))
+		base(string.Format("{0} is not the type of datasource specified.", dataSource))
 		{
 			incorrectDataSource = dataSource;
 		}

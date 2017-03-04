@@ -28,7 +28,7 @@ namespace TableauFileClass
 		/// </summary>
 		/// <param name="filePath">File path to your Excel file.</param>
 		/// <param name="dataSourceName">Data source name.</param>
-		public void AddExcelDataSource(string filePath, string tableName, string dataSourceName)
+		public void AddExcelTableDataSource(string filePath, string tableName, string dataSourceName)
 		{
 			FileInfo excelFile = new FileInfo(filePath);
 			if (excelFile.Extension == ".xlsx")
