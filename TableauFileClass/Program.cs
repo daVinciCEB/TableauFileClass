@@ -8,7 +8,7 @@ namespace TableauFileClass
 		{
 			TableauWorkbook workbook = new TableauWorkbook();
 			workbook.WorkbookName = "Base Workbook";
-			workbook.AddParameter("Test");
+			workbook.AddExcelTableDataSource("C:/path/to/excel/file.xlsx", "Table", "My new Datasource");
 			workbook.SaveWorkbook();
 		}
 	}

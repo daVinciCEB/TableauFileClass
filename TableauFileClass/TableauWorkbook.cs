@@ -41,6 +41,7 @@ namespace TableauFileClass
 				excelDataSource.DataConnection.AddAttribute("dataRefreshTime", "");
 				excelDataSource.DataConnection.AddAttribute("validate", "no");
 				excelDataSource.DataConnection.Relation = new TableauDataRelation(dataSourceName, "[" + tableName + "$]", "table");
+				datasources.Add(excelDataSource);
 			}
 			else
 			{
