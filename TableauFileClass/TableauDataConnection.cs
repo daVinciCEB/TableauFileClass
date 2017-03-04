@@ -9,6 +9,7 @@ namespace TableauFileClass
 		public string ConnectionClass;
 		public string ConnectionFileName;
 		private Dictionary<string, string> DataConnectionAttributes = new Dictionary<string, string>();
+
 		#endregion
 
 		#region Tableau Data Connection Class Functions

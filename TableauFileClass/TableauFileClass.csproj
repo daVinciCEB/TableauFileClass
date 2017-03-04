@@ -51,6 +51,7 @@
     <Compile Include="TableauCalculation.cs" />
     <Compile Include="DataSourceNotCorrectTypeException.cs" />
     <Compile Include="TableauDataConnection.cs" />
+    <Compile Include="TableauDataRelation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tableau Workbook Examples\" />
